@@ -35,6 +35,10 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/swiggy-clone:latest
         env:
           DOCKER_CLI_ACI: 1
+      - name: Try to stop and remove existing container (if any)
+        run: |
+          docker stop swiggy-clone || echo "Container not running, skipping stop."
+          docker rm swiggy-clone || echo "Container not found, skipping removal."
 
   deploy:
      needs: build
