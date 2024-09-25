@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: swiggy
-        image: ${{ secrets.DOCKERHUB_USERNAME }}/swiggy-clone:latest
+        image: gokulabalan/swiggy-clone:latest
         ports:
         - containerPort: 3000   # Use port 3000
 
