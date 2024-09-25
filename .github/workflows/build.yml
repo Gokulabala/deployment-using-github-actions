@@ -54,7 +54,7 @@ jobs:
           uses: actions/cache@v3
           with:
             path: ~/.cache/trivy/db
-            key: ${{ runner.os }}-trivy-db
+            key: ${{ runner.os }}-trivy-db-${{ github.run_id }}
         - name: Run Trivy Scan
           run: |
             trivy image --cache-dir ~/.cache/trivy/db ${{ secrets.DOCKERHUB_USERNAME }}/swiggy-clone:latest > trivyimagedeploy.txt
