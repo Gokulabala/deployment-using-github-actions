@@ -50,8 +50,14 @@ jobs:
     steps:
         - name: docker pull image
           run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/swiggy-clone:latest
-        - name: Image scan
-          run: trivy image ${{ secrets.DOCKERHUB_USERNAME }}/swiggy-clone:latest > trivyimagedeploy.txt
+        - name: Cache Trivy DB
+          uses: actions/cache@v3
+          with:
+            path: ~/.cache/trivy/db
+            key: ${{ runner.os }}-trivy-db
+        - name: Run Trivy Scan
+          run: |
+            trivy image --cache-dir ~/.cache/trivy/db ${{ secrets.DOCKERHUB_USERNAME }}/swiggy-clone:latest > trivyimagedeploy.txt
         - name: Deploy to container
           run: docker run -d --name swiggy-clone -p 3000:3000 ${{ secrets.DOCKERHUB_USERNAME }}/swiggy-clone:latest
         - name: Update kubeconfig
