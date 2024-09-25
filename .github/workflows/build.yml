@@ -30,8 +30,8 @@ jobs:
       - name: Docker build and push
         run: |
           docker build -t swiggy-clone .
-          docker tag swiggy-clone gokulabalan/swiggy-clone:latest
-          docker login -u ${{ secrets.Dockerhub_username }} -p ${{ secrets.Dockerhub_token }}
-          docker push gokulabalan/swiggy-clone:latest
+          docker tag swiggy-clone ${DOCKERHUB_USERNAME}/swiggy-clone:latest
+          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker push ${DOCKERHUB_USERNAME}/swiggy-clone:latest
         env:
           DOCKER_CLI_ACI: 1
